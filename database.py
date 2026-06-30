@@ -8,19 +8,20 @@ CREATE TABLE IF NOT EXISTS customers (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
     phone TEXT,
-    frame TEXT,
-    amount INTEGER
-)
-""")
-
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS inventory (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    brand TEXT,
-    model TEXT,
-    price INTEGER,
-    stock INTEGER
+    address TEXT,
+    prescription TEXT
 )
 """)
 
 conn.commit()
+
+def add_customer(name, phone, address, prescription):
+    cursor.execute(
+        "INSERT INTO customers (name, phone, address, prescription) VALUES (?, ?, ?, ?)",
+        (name, phone, address, prescription)
+    )
+    conn.commit()
+
+def get_customers():
+    cursor.execute("SELECT * FROM customers")
+    return cursor.fetchall()
